@@ -1,0 +1,11 @@
+.build
+.mbed
+projectfiles
+*.py*
+BUILD
+compile_commands.json
+.clangd
+.cache
+Keypad
+mbed-os
+TextLCD

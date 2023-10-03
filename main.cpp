@@ -32,7 +32,7 @@ char keyMap[numRows][numCols] = {
 };
 
 DigitalOut rowPins[numRows] = {DigitalOut(D8), DigitalOut(D9), DigitalOut(D10), DigitalOut(D11)};
-DigitalIn colPins[numCols] = {DigitalIn(D12), DigitalIn(D13), DigitalIn(D14), DigitalIn(D15)};
+DigitalIn colPins[numCols] = {DigitalIn(D12), DigitalIn(D14), DigitalIn(D15), DigitalIn(PTB8)};
 
 // Función para calcular las raíces de un polinomio de grado 2
 
@@ -50,18 +50,24 @@ void calculateRoots(int a, int b, int c) {
         int root1 = (-b + sqrt(discriminant)) / (2 * a);
         int root2 = (-b - sqrt(discriminant)) / (2 * a);
         printf("Raices enteras: %d y %d\n", root1, root2);   
-        lcd.printf("Raices: %d y %d", root1, root2); // Utilizamos una cadena de formato
+        lcd.cls();
+        lcd.printf("Raices: %d & %d", root1, root2); // Utilizamos una cadena de formato
+        wait_us(3500000);
     } else if (discriminant == 0) {
         // Una raíz real
         int root = -b / (2 * a);
         printf("Raiz entera unica: %d\n", root);
+        lcd.cls();
         lcd.printf("Raiz unica: %d", root); // Utilizamos una cadena de formato      
+        wait_us(3500000);
     } else {
         // Raíces complejas (no aplicable en este caso)
         printf("El polinomio no tiene raices enteras.\n");
+        lcd.cls();
         lcd.printf("No tiene raices"); // Utilizamos una cadena de formato
         lcd.locate(0,1);
         lcd.printf("enteras");
+        wait_us(3500000);
     }
 }
 
@@ -70,6 +76,9 @@ void processKeyRaiz(char key) {
         if (key == '*') {
             inputBufferRaiz[bufferIndexRaiz] = '\0';  // Null-terminate the string
             printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBufferRaiz);
+            lcd.cls();
+            lcd.printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBufferRaiz);
+            wait_us(200000);
 
             // Interpretar '#' como signo negativo al inicio
             int coefficientValue;
@@ -80,6 +89,9 @@ void processKeyRaiz(char key) {
             } else {
                 if (sscanf(inputBufferRaiz, "%d", &coefficientValue) != 1) {
                     printf("Entrada invalida. Por favor, ingrese un numero valido.\n");
+                    lcd.cls();
+                    lcd.printf("Entrada invalida");
+                    wait_us(500000);
                     bufferIndexRaiz = 0;
                     return;
                 }
@@ -91,9 +103,18 @@ void processKeyRaiz(char key) {
                 //lcd.cls();
                 //lcd.printf("Ingrese coeficiente: "); 
                 printf("Por favor, ingrese el coeficiente %c: ", 'a' + coefficientIndex);
+                lcd.cls();
+                lcd.printf("Ingrese el coeficiente %c: ", 'a' + coefficientIndex);
+                wait_us(500000);
                 bufferIndexRaiz = 0;
             } else {
-                printf("Coeficientes ingresados: a=%d, b=%d, c=%d\n", coefficients[0], coefficients[1], coefficients[2]);
+                printf("Coeficientes: a=%d, b=%d, c=%d\n", coefficients[0], coefficients[1], coefficients[2]);
+                lcd.cls();
+                lcd.printf("Coeficientes:");
+                wait_us(200000);
+                lcd.locate(0,1);
+                lcd.printf("a=%d, b=%d, c=%d\n", coefficients[0], coefficients[1], coefficients[2]);
+                wait_us(3500000);
                 // Calcula las raíces
                 calculateRoots(coefficients[0], coefficients[1], coefficients[2]);
                 coefficientIndex = 0;
@@ -106,6 +127,9 @@ void processKeyRaiz(char key) {
         if (key == '*') {
             recordingRaiz = true;
             printf("Por favor, ingrese el coeficiente %c: ", 'a' + coefficientIndex);
+            lcd.cls();
+            lcd.printf("Ingrese el coeficiente %c: ", 'a' + coefficientIndex);
+            wait_us(3500000);
             bufferIndexRaiz = 0;
         }
     }
@@ -114,6 +138,9 @@ void processKeyRaiz(char key) {
 
 void llamarCalculateRoots(){
     printf("Ingrese los coeficientes del polinomio de grado 2.\n");
+    lcd.cls();
+    lcd.printf("Ingrese coefts del polinomio");
+    wait_us(3500000);
     while (true) {
         for (int i = 0; i < numRows; i++) {
             rowPins[i] = 0;
@@ -165,6 +192,9 @@ void processKey(char key) {
         if (bufferIndex > 0) {
             inputBuffer[bufferIndex] = '\0';  // Null-terminate the string
             printf("Numero ingresado: %s\n", inputBuffer);
+            lcd.cls();
+            lcd.printf("Numero ingresado: %s\n", inputBuffer);
+            wait_us(3500000);
             
             // Convertir la entrada a un número
             float N = atof(inputBuffer);
@@ -172,9 +202,14 @@ void processKey(char key) {
             if (N >= 0 && N <= 10) {
                 char nota = convertToGrade(N);
                 printf("Nota alfanumerica: %c\n", nota);
+                lcd.cls();
                 lcd.printf("Nota alfanumerica: %c\n", nota);
+                wait_us(3500000);
             } else {
                 printf("Valor de nota no valido: %s\n", inputBuffer);
+                lcd.cls();
+                lcd.printf("Valor de nota no valido: %s\n", inputBuffer);
+                wait_us(3500000);
             }
             
             bufferIndex = 0;
@@ -222,6 +257,9 @@ void showColors() {
 
                         sscanf(inputBuffer, "%u", &numerosDecimales[numeroActual]);
                         printf("Numero %d ingresado: %u\n", numeroActual + 1, numerosDecimales[numeroActual]);
+                        lcd.cls();
+                        lcd.printf("Numero %d ingresado: %u\n", numeroActual + 1, numerosDecimales[numeroActual]);
+                        wait_us(500000);
 
                         memset(inputBuffer, 0, sizeof(inputBuffer));
                         bufferIndex = 0;
@@ -288,15 +326,27 @@ int darEleccion(){
     return eleccion;
 }
 
+void darMensaje(){    
+    lcd.printf("Bienvenido profe Juan, Arq Hard");
+    wait_us(2000000);
+    lcd.cls();
+    lcd.printf("Elija una opcion y presione *");
+    wait_us(2000000);
+    lcd.cls();    
+    lcd.printf("(1) Raices de un polinomio");
+    wait_us(2000000);
+    lcd.cls();
+    lcd.printf("(2) Mostrar colores");
+    wait_us(2000000);
+    lcd.cls();
+    lcd.printf("(3) Mostrar notas");    
+}
+
 
 int main() {
-    printf("Por favor, elija una opcion y presione * para confirmar:\n");
-    printf("1. Calcular raices de un polinomio de grado 2\n");
-    printf("2. Mostrar colores\n");
-    printf("3. Mostrar notas\n");
-
-
-    printf("Elija una opcion: ");
+    darMensaje();
+    
+    // printf("Elija una opcion: ");
 
     int eleccion = darEleccion();
 
@@ -312,10 +362,16 @@ int main() {
         break;
     default:
         printf("Programa terminado.\n");
+        lcd.cls();
+        lcd.printf("Programa terminado.");
+        wait_us(3500000);
         break;
     }
     
     printf("Programa terminado.\n");
+    lcd.cls();
+    lcd.printf("Programa terminado.");
+    wait_us(3500000);
     
     return 0;
 }

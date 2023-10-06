@@ -7,7 +7,8 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 1. Se importaron las librerias del teclado matricial y TextLCD.
 2. Se creo un metodo void para mostrar los mensajes de bienvenidad y del como funciona el programa por hubo problemas el ponerlo directament en el main. El metodo se llama `darMensaje()` y es el siguiente:
-   
+
+   ```c++
    void darMensaje(){    
     lcd.printf("Bienvenido profe Juan, Arq Hard");
     wait_us(2000000);
@@ -23,6 +24,7 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
     lcd.cls();
     lcd.printf("(3) Mostrar notas");    
 }
+```
 
 Sabemos que `lcd.cls();` es para limpiar la pantalla LCD, `lcd.printf()` para mostrar un mensaje en la LCD y `wais_us()` para darle un tiempo de espera al mensaje 
 

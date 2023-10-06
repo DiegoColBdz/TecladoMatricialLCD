@@ -1,6 +1,6 @@
 
-# Parcial de Arquitectura de HardWare
-Por Diego Collazos y José David Jayk Vanegas
+# Implementacion Parcial de Arquitectura de HardWare 
+Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 
 ## Algunas funciones y declaraciones

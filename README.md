@@ -3,8 +3,31 @@
 Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 
-## Algunas funciones y declaraciones
+## Lo nuevo 
 
+1. Se importaron las librerias del teclado matricial y TextLCD.
+2. Se creo un metodo void para mostrar los mensajes de bienvenidad y del como funciona el programa por hubo problemas el ponerlo directament en el main. El metodo se llama `darMensaje()` y es el siguiente:
+   
+   void darMensaje(){    
+    lcd.printf("Bienvenido profe Juan, Arq Hard");
+    wait_us(2000000);
+    lcd.cls();
+    lcd.printf("Elija una opcion y presione *");
+    wait_us(2000000);
+    lcd.cls();    
+    lcd.printf("(1) Raices de un polinomio");
+    wait_us(2000000);
+    lcd.cls();
+    lcd.printf("(2) Mostrar colores");
+    wait_us(2000000);
+    lcd.cls();
+    lcd.printf("(3) Mostrar notas");    
+}
+
+Sabemos que `lcd.cls();` es para limpiar la pantalla LCD, `lcd.printf()` para mostrar un mensaje en la LCD y `wais_us()` para darle un tiempo de espera al mensaje 
+
+
+## Algunas funciones y declaraciones
 
 
 ### Declaramos las variables ledR, ledG y ledB
@@ -106,9 +129,12 @@ void processKey(char key) {
     if (key == '*' && !recording) {
         recording = true; // Iniciar la grabación del número
     } else if (key == '*' && recording) {
-         if (bufferIndex > 0) {
+        if (bufferIndex > 0) {
             inputBuffer[bufferIndex] = '\0';  // Null-terminate the string
             printf("Numero ingresado: %s\n", inputBuffer);
+            lcd.cls();
+            lcd.printf("Numero ingresado: %s\n", inputBuffer);
+            wait_us(3500000);
             
             // Convertir la entrada a un número
             float N = atof(inputBuffer);
@@ -116,14 +142,19 @@ void processKey(char key) {
             if (N >= 0 && N <= 10) {
                 char nota = convertToGrade(N);
                 printf("Nota alfanumerica: %c\n", nota);
+                lcd.cls();
+                lcd.printf("Nota alfanumerica: %c\n", nota);
+                wait_us(3500000);
             } else {
                 printf("Valor de nota no valido: %s\n", inputBuffer);
+                lcd.cls();
+                lcd.printf("Valor de nota no valido: %s\n", inputBuffer);
+                wait_us(3500000);
             }
             
             bufferIndex = 0;
         }
         recording = false; // Detener la grabación después de la conversión
-        
     } else if (recording) {
         inputBuffer[bufferIndex++] = key;
     }
@@ -136,14 +167,20 @@ void processKey(char key) {
 5. `if (bufferIndex > 0) {` : Se verifica si `bufferIndex` es mayor que 0. Esto garantiza que haya algo en `inputBuffer` para convertir antes de continuar. Si `bufferIndex` es 0, significa que no se ha ingresado ningún número y no hay nada que convertir.
 6. `inputBuffer[bufferIndex] = '\0';` : Se coloca un carácter nulo `('\0')` al final del contenido en `inputBuffer`. Esto es importante porque `inputBuffer` es un arreglo de caracteres y debe estar null-terminado para que la funcion `atof` funcione correctamente.
 7. `printf("Número ingresado: %s\n", inputBuffer);` : Imprime el número ingresado por el usuario en termite. Esto es útil para verificar que se ha capturado correctamente el número.
-8. `float N = atof(inputBuffer);` : Utiliza la función `atof` para convertir la cadena en `inputBuffer` en un número decimal de punto flotante (float). `atof` toma la cadena y la interpreta como un número.
-9. `if (N >= 0 && N <= 10) {` : Verifica si el número está dentro del rango válido, es decir, entre 0 y 10. Si no está en ese rango, se considera un valor de nota no válido.
-10. `char nota = convertToGrade(N);` : Llama a la función `convertToGrade` para convertir el número `N` en una nota alfanumérica y almacena el resultado en la variable `nota`.
-11. `printf("Nota alfanumérica: %c\n", nota);` : Imprime la nota alfanumérica calculada en termite.
-12. `bufferIndex = 0;` : Reinicia `bufferIndex` a 0 para estar listo para capturar un nuevo número que ingrese el usuario.
-13. `recording = false;` : Finalmente, se establece `recording` en `false` para indicar que la grabación ha terminado.
-14. `} else if (recording) {` : Esta parte se ejecuta cuando no se presiona *, pero la grabación está en curso.
-15. `inputBuffer[bufferIndex++] = key;` : Aquí, la tecla actual (`key`) se agrega al búfer de entrada `inputBuffer`. `bufferIndex` se utiliza como un índice para rastrear la posición actual en el búfer, y después de agregar la tecla, se incrementa para prepararse para la próxima tecla. Esto permite la captura de múltiples dígitos y caracteres para formar un número.
+8. `lcd.cls();` : Esta linea de codigo sirve para limpiar la pantalla del LCD
+9. `lcd.printf("Nota alfanumerica: %c\n", nota);` : Aqui se imprime el mensaje en el LCD
+10. `wait_us(3500000);` : Es el tiempo en milisegundos que se le da al mensaje,
+11. `float N = atof(inputBuffer);` : Utiliza la función `atof` para convertir la cadena en `inputBuffer` en un número decimal de punto flotante (float). `atof` toma la cadena y la interpreta como un número.
+12. `if (N >= 0 && N <= 10) {` : Verifica si el número está dentro del rango válido, es decir, entre 0 y 10. Si no está en ese rango, se considera un valor de nota no válido.
+13. `char nota = convertToGrade(N);` : Llama a la función `convertToGrade` para convertir el número `N` en una nota alfanumérica y almacena el resultado en la variable `nota`.
+14. `printf("Nota alfanumérica: %c\n", nota);` : Imprime la nota alfanumérica calculada en termite.
+15. `lcd.cls();` : Limpiamos la pantalla para imprimir un nuevo mensaje
+16. `lcd.printf("Nota alfanumerica: %c\n", nota);` : Imprime la nota calculada en la pantalla LCD
+17.  `wait_us(3500000);` : Es el tiempo de espera que se le da al mensaje
+18. `bufferIndex = 0;` : Reinicia `bufferIndex` a 0 para estar listo para capturar un nuevo número que ingrese el usuario.
+19. `recording = false;` : Finalmente, se establece `recording` en `false` para indicar que la grabación ha terminado.
+20. `} else if (recording) {` : Esta parte se ejecuta cuando no se presiona *, pero la grabación está en curso.
+21. `inputBuffer[bufferIndex++] = key;` : Aquí, la tecla actual (`key`) se agrega al búfer de entrada `inputBuffer`. `bufferIndex` se utiliza como un índice para rastrear la posición actual en el búfer, y después de agregar la tecla, se incrementa para prepararse para la próxima tecla. Esto permite la captura de múltiples dígitos y caracteres para formar un número.
 
 ```c++
 void mostrarNotas(){
@@ -194,6 +231,9 @@ void showColors() {
 
                         sscanf(inputBuffer, "%u", &numerosDecimales[numeroActual]);
                         printf("Numero %d ingresado: %u\n", numeroActual + 1, numerosDecimales[numeroActual]);
+                        lcd.cls();
+                        lcd.printf("Numero %d ingresado: %u\n", numeroActual + 1, numerosDecimales[numeroActual]);
+                        wait_us(500000);
 
                         memset(inputBuffer, 0, sizeof(inputBuffer));
                         bufferIndex = 0;
@@ -259,6 +299,12 @@ Esta función está diseñada para permitir al usuario seleccionar colores ingre
 
 `printf("Número %d ingresado: %u\n", numeroActual + 1, numerosDecimales[numeroActual]);` Imprimimos el número recien ingresado indicando que número hemos ingresado, por ejemplo: "Número 1 ingresado: 255".
 
+`lcd.cls();` : Limpia la pantalla, para mostrar un nuevo mensaje
+
+`lcd.printf("Numero %d ingresado: %u\n", numeroActual + 1, numerosDecimales[numeroActual]);` : Imprimimos el número en la pantalla LCD recien ingresado indicando que número hemos ingresado, por ejemplo: "Número 1 ingresado: 255".
+
+ `wait_us(500000);` : Es el tiempo de espera que se le da al mensaje en la LCD
+
 `memset(inputBuffer, 0, sizeof(inputBuffer));` Se borra el contenido del `inputBuffer` para prepararlo para el próximo valor numérico.
 
 `bufferIndex = 0;` Se reinicia el índice del buffer a 0 para empezar a almacenar el próximo carácter desde el principio.
@@ -317,36 +363,53 @@ void calculateRoots(int a, int b, int c) {
         // Dos raíces enteras
         int root1 = (-b + sqrt(discriminant)) / (2 * a);
         int root2 = (-b - sqrt(discriminant)) / (2 * a);
-        printf("Raíces enteras: %d y %d\n", root1, root2);
+        printf("Raices enteras: %d y %d\n", root1, root2);   
+        lcd.cls();
+        lcd.printf("Raices: %d & %d", root1, root2); // Utilizamos una cadena de formato
+        wait_us(3500000);
     } else if (discriminant == 0) {
         // Una raíz real
         int root = -b / (2 * a);
-        printf("Raíz entera única: %d\n", root);
+        printf("Raiz entera unica: %d\n", root);
+        lcd.cls();
+        lcd.printf("Raiz unica: %d", root); // Utilizamos una cadena de formato      
+        wait_us(3500000);
     } else {
         // Raíces complejas (no aplicable en este caso)
-        printf("El polinomio no tiene raíces enteras.\n");
+        printf("El polinomio no tiene raices enteras.\n");
+        lcd.cls();
+        lcd.printf("No tiene raices"); // Utilizamos una cadena de formato
+        lcd.locate(0,1);
+        lcd.printf("enteras");
+        wait_us(3500000);
     }
 }
 ```
-Definimos una función `calculateRoots` que toma tres coeficientes enteros `a, b y c` y calcula las raíces del polinomio de grado 2 utilizando la fórmula cuadrática o mejor conocida como formula del estudiante. La función verifica si el discriminante es mayor que 0 (dos raíces reales), igual a 0 (una raíz real) o menor que 0 (raíces complejas), y muestra las raíces en la pantalla.
+Definimos una función `calculateRoots` que toma tres coeficientes enteros `a, b y c` y calcula las raíces del polinomio de grado 2 utilizando la fórmula cuadrática o mejor conocida como formula del estudiante. La función verifica si el discriminante es mayor que 0 (dos raíces reales), igual a 0 (una raíz real) o menor que 0 (raíces complejas), y muestra las raíces en la pantalla. Se agrego `lcd.cls()` para limpiar la pantalla LCD, luego `lcd.printf("No tiene raices");` que imprime el mensaje y el `wait_us(3500000)` el tiempo de espera que se le da al mensaje
 
 ```c++
 void processKeyRaiz(char key) {
-    if (recording) {
+    if (recordingRaiz) {
         if (key == '*') {
-            inputBuffer[bufferIndex] = '\0';  // Null-terminate the string
-            printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBuffer);
+            inputBufferRaiz[bufferIndexRaiz] = '\0';  // Null-terminate the string
+            printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBufferRaiz);
+            lcd.cls();
+            lcd.printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBufferRaiz);
+            wait_us(200000);
 
             // Interpretar '#' como signo negativo al inicio
             int coefficientValue;
-            if (inputBuffer[0] == '#') {
-                if (sscanf(inputBuffer + 1, "%d", &coefficientValue) == 1) {
+            if (inputBufferRaiz[0] == '#') {
+                if (sscanf(inputBufferRaiz + 1, "%d", &coefficientValue) == 1) {
                     coefficientValue = -coefficientValue;
                 }
             } else {
-                if (sscanf(inputBuffer, "%d", &coefficientValue) != 1) {
-                    printf("Entrada inválida. Por favor, ingrese un número válido.\n");
-                    bufferIndex = 0;
+                if (sscanf(inputBufferRaiz, "%d", &coefficientValue) != 1) {
+                    printf("Entrada invalida. Por favor, ingrese un numero valido.\n");
+                    lcd.cls();
+                    lcd.printf("Entrada invalida");
+                    wait_us(500000);
+                    bufferIndexRaiz = 0;
                     return;
                 }
             }
@@ -354,23 +417,37 @@ void processKeyRaiz(char key) {
             coefficients[coefficientIndex] = coefficientValue;
             coefficientIndex++;
             if (coefficientIndex < 3) {
+                //lcd.cls();
+                //lcd.printf("Ingrese coeficiente: "); 
                 printf("Por favor, ingrese el coeficiente %c: ", 'a' + coefficientIndex);
-                bufferIndex = 0;
+                lcd.cls();
+                lcd.printf("Ingrese el coeficiente %c: ", 'a' + coefficientIndex);
+                wait_us(500000);
+                bufferIndexRaiz = 0;
             } else {
-                printf("Coeficientes ingresados: a=%d, b=%d, c=%d\n", coefficients[0], coefficients[1], coefficients[2]);
+                printf("Coeficientes: a=%d, b=%d, c=%d\n", coefficients[0], coefficients[1], coefficients[2]);
+                lcd.cls();
+                lcd.printf("Coeficientes:");
+                wait_us(200000);
+                lcd.locate(0,1);
+                lcd.printf("a=%d, b=%d, c=%d\n", coefficients[0], coefficients[1], coefficients[2]);
+                wait_us(3500000);
                 // Calcula las raíces
                 calculateRoots(coefficients[0], coefficients[1], coefficients[2]);
                 coefficientIndex = 0;
-                recording = false;
+                recordingRaiz = false;
             }
         } else {
-            inputBuffer[bufferIndex++] = key;
+            inputBufferRaiz[bufferIndexRaiz++] = key;
         }
     } else {
         if (key == '*') {
-            recording = true;
+            recordingRaiz = true;
             printf("Por favor, ingrese el coeficiente %c: ", 'a' + coefficientIndex);
-            bufferIndex = 0;
+            lcd.cls();
+            lcd.printf("Ingrese el coeficiente %c: ", 'a' + coefficientIndex);
+            wait_us(3500000);
+            bufferIndexRaiz = 0;
         }
     }
 }
@@ -380,31 +457,40 @@ void processKeyRaiz(char key) {
 3. `if (key == '*') {` : Comprobación si el usuario ha presionado el asterisco *, lo que indica que ha terminado de ingresar el coeficiente actual.
 4. `inputBuffer[bufferIndex] = '\0';` : Establece el carácter nulo ('\0') al final del búfer `inputBuffer` para formar una cadena de caracteres válida.
 5. `printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBuffer);`: Muestra en pantalla el coeficiente ingresado hasta el momento y su etiqueta ('a', 'b' o 'c').
-6. `int coefficientValue;`: Declara una variable `coefficientValue` para almacenar el valor del coeficiente.
-7. `if (inputBuffer[0] == '#') {`: Comprueba si el primer carácter en `inputBuffer` es #, lo que indica que el usuario está ingresando un número negativo.
-8. `if (sscanf(inputBuffer + 1, "%d", &coefficientValue) == 1) {`: Utiliza `sscanf` para analizar la parte de la cadena de caracteres después del '#' y extraer un número entero. Si la conversión tiene éxito (retorna 1), se asigna a `coefficientValue`.
-9. `coefficientValue = -coefficientValue;`: Si el usuario ingresó '#' al principio, se interpreta como un número negativo y se cambia el signo de `coefficientValue` a negativo.
-10. `} else {`: Si no se ingresó '#' al principio, se realiza el análisis normal de la cadena de caracteres.
-11. `if (sscanf(inputBuffer, "%d", &coefficientValue) != 1) {`: Utiliza sscanf para analizar toda la cadena de caracteres y extraer un número entero. Si la conversión no tiene éxito, muestra un mensaje de "Entrada inválida" y reinicia el búfer y el proceso de entrada.
-12. `coefficients[coefficientIndex] = coefficientValue;`: Almacena el valor del coeficiente en el arreglo `coefficients` en la posición correspondiente.
-13. `coefficientIndex++;`: Incrementa el índice del coeficiente para pasar al siguiente coeficiente.
-14. `if (coefficientIndex < 3) {`: Verifica si todavía hay más coeficientes por ingresar. Si es así, solicita al usuario que ingrese el próximo coeficiente y reinicia el búfer para la nueva entrada.
-15. `} else {`: Si se han ingresado todos los coeficientes, muestra un mensaje con los coeficientes ingresados, calcula las raíces llamando a calculateRoots, reinicia el índice del coeficiente y sale del modo de grabación.
-16. `} else {`: Si el usuario no ha presionado '*', significa que está ingresando dígitos del coeficiente actual.
-17. `inputBuffer[bufferIndex++] = key;`: Almacena el dígito ingresado en el búfer y aumenta el índice del búfer.
-18. `}`: Cierra el bloque if que maneja el caso en que se presiona '*' para finalizar el coeficiente actual.
-19. `} else {`: Si no estamos en modo de grabación, significa que el usuario ha presionado '*' para iniciar un nuevo coeficiente.
-20. `if (key == '*') {`: Comprueba si el usuario ha presionado '*', lo que indica el inicio de la grabación de un nuevo coeficiente.
-21. `recording = true;`: Cambia recording a true para entrar en modo de grabación.
-22. `printf("Por favor, ingrese el coeficiente %c: ", 'a' + coefficientIndex);`: Muestra un mensaje solicitando al usuario que ingrese el primer coeficiente ('a', 'b' o 'c').}
-23. `bufferIndex = 0;`: Reinicia el índice del búfer para recopilar la nueva entrada.
-24. `}`: Cierra el bloque `
+6. `lcd.cls();` : Limpiamos la pantalla LCD
+7. `lcd.printf("Coeficiente %c: %s\n", 'a' + coefficientIndex, inputBufferRaiz);` : Muestra en la LCD el coeficiente ingresado hasta el momento y su etiqueta ('a','b','c').
+8. ` wait_us(200000);` : Es ekl tiempo de espera que se le da al mensaje
+9. `int coefficientValue;`: Declara una variable `coefficientValue` para almacenar el valor del coeficiente.
+10. `if (inputBuffer[0] == '#') {`: Comprueba si el primer carácter en `inputBuffer` es #, lo que indica que el usuario está ingresando un número negativo.
+11. `if (sscanf(inputBuffer + 1, "%d", &coefficientValue) == 1) {`: Utiliza `sscanf` para analizar la parte de la cadena de caracteres después del '#' y extraer un número entero. Si la conversión tiene éxito (retorna 1), se asigna a `coefficientValue`.
+12. `coefficientValue = -coefficientValue;`: Si el usuario ingresó '#' al principio, se interpreta como un número negativo y se cambia el signo de `coefficientValue` a negativo.
+13. `} else {`: Si no se ingresó '#' al principio, se realiza el análisis normal de la cadena de caracteres.
+14. `if (sscanf(inputBuffer, "%d", &coefficientValue) != 1) {`: Utiliza sscanf para analizar toda la cadena de caracteres y extraer un número entero. Si la conversión no tiene éxito, muestra un mensaje de "Entrada inválida" y reinicia el búfer y el proceso de entrada.
+15. `coefficients[coefficientIndex] = coefficientValue;`: Almacena el valor del coeficiente en el arreglo `coefficients` en la posición correspondiente.
+16. `coefficientIndex++;`: Incrementa el índice del coeficiente para pasar al siguiente coeficiente.
+17. `if (coefficientIndex < 3) {`: Verifica si todavía hay más coeficientes por ingresar. Si es así, solicita al usuario que ingrese el próximo coeficiente y reinicia el búfer para la nueva entrada.
+18. `} else {`: Si se han ingresado todos los coeficientes, muestra un mensaje con los coeficientes ingresados, calcula las raíces llamando a calculateRoots, reinicia el índice del coeficiente y sale del modo de grabación.
+19. `} else {`: Si el usuario no ha presionado '*', significa que está ingresando dígitos del coeficiente actual.
+20. `inputBuffer[bufferIndex++] = key;`: Almacena el dígito ingresado en el búfer y aumenta el índice del búfer.
+21. `}`: Cierra el bloque if que maneja el caso en que se presiona '*' para finalizar el coeficiente actual.
+22. `} else {`: Si no estamos en modo de grabación, significa que el usuario ha presionado '*' para iniciar un nuevo coeficiente.
+23. `if (key == '*') {`: Comprueba si el usuario ha presionado '*', lo que indica el inicio de la grabación de un nuevo coeficiente.
+24. `recording = true;`: Cambia recording a true para entrar en modo de grabación.
+25. `printf("Por favor, ingrese el coeficiente %c: ", 'a' + coefficientIndex);`: Muestra un mensaje solicitando al usuario que ingrese el primer coeficiente ('a', 'b' o 'c').}
+26. `lcd.cls();` : Limpiamos la pantalla LCD
+27. ` lcd.printf("Ingrese el coeficiente %c: ", 'a' + coefficientIndex);` : Muestra un mensaje en la LCD solicitando al usuario que ingrese el primer coeficiente ('a', 'b' o 'c').
+28. `wait_us(3500000);` : Es el tiempo de espera que se le da al mensaje
+29. `bufferIndex = 0;`: Reinicia el índice del búfer para recopilar la nueva entrada.
+30. `}`: Cierra el bloque `
 
 En sintesis `processKey` maneja la entrada del usuario para que pueda ingresar coeficientes uno por uno, verificar la validez de la entrada y calcular las raíces una vez que todos los coeficientes han sido ingresados correctamente.
 
 ```c++
 void llamarCalculateRoots(){
     printf("Ingrese los coeficientes del polinomio de grado 2.\n");
+    lcd.cls();
+    lcd.printf("Ingrese coefts del polinomio");
+    wait_us(3500000);
     while (true) {
         for (int i = 0; i < numRows; i++) {
             rowPins[i] = 0;
@@ -421,7 +507,7 @@ void llamarCalculateRoots(){
     }
 }
 ```
-En la función `llamarCalculateRoots`, el programa muestra el mensaje "Ingrese los coeficientes del polinomio de grado 2". Luego, entramos en un bucle infinito que escanea las teclas del teclado matricial. Para cada fila y columna, llamamos a `processKey` para procesar las teclas presionadas y evitar lecturas múltiples mientras una tecla está presionada.
+En la función `llamarCalculateRoots`, el programa muestra en la LCD el mensaje "Ingrese los coefts del polinomio". Luego, entramos en un bucle infinito que escanea las teclas del teclado matricial. Para cada fila y columna, llamamos a `processKey` para procesar las teclas presionadas y evitar lecturas múltiples mientras una tecla está presionada.
 
 **Este es el método que se llama en el main para la Función de raices de un polinomio de grado 2.**
 
@@ -430,13 +516,9 @@ En la función `llamarCalculateRoots`, el programa muestra el mensaje "Ingrese l
 
 ```c++
 int main() {
-    printf("Por favor, elija una opcion y presione * para confirmar:\n");
-    printf("1. Calcular raices de un polinomio de grado 2\n");
-    printf("2. Mostrar colores\n");
-    printf("3. Mostrar notas\n");
-
-
-    printf("Elija una opcion: ");
+    darMensaje();
+    
+    // printf("Elija una opcion: ");
 
     int eleccion = darEleccion();
 
@@ -452,26 +534,24 @@ int main() {
         break;
     default:
         printf("Programa terminado.\n");
+        lcd.cls();
+        lcd.printf("Programa terminado.");
+        wait_us(3500000);
         break;
     }
     
     printf("Programa terminado.\n");
+    lcd.cls();
+    lcd.printf("Programa terminado.");
+    wait_us(3500000);
     
     return 0;
 }
 ```
 
-```c++
-printf("Por favor, elija una opción y presione * para confirmar:\n");
-printf("1. Calcular raíces de un polinomio de grado 2\n");
-printf("2. Mostrar colores\n");
-printf("3. Notas\n");
+Primero se llama al metodo `darMensaje();`
 
-printf("Elija una opción: ");
-
-```
-
-Primero le preguntamos al usaurio que opción desea ejecutar y guardamos en la variable eleccción el número que representa la elecciónd el usuario, esté valor lo da la función `darEleccion();`.
+Luego le preguntamos al usaurio que opción desea ejecutar y guardamos en la variable eleccción el número que representa la elecciónd el usuario, esté valor lo da la función `darEleccion();`.
 
 ```c++
 int darEleccion(){
@@ -544,7 +624,7 @@ En resumen, este código permite al usuario seleccionar un número entre 0 y 3 e
 Luego se ejecutan la opción seleccionada utilizando una sentencia switch:
 
 ```c++
-switch (eleccion) {
+    switch (eleccion) {
     case 1:
         llamarCalculateRoots();
         break;
@@ -556,6 +636,9 @@ switch (eleccion) {
         break;
     default:
         printf("Programa terminado.\n");
+        lcd.cls();
+        lcd.printf("Programa terminado.");
+        wait_us(3500000);
         break;
     }
 ```

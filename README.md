@@ -51,7 +51,13 @@ Usamos el método `wati_us()` de la librería TextLCD para darle un tiempo de es
 
 ## Algunas fotos
 
+Benvenido profe Juan.jpg
 
+Elija una opción.jpg
+
+Coeficientes.jpg
+
+Raices.jpg
 
 
 ## Algunas funciones y declaraciones

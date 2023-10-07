@@ -4,6 +4,7 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 
 ## Para mostrar mensajes en la pantalla LCD
+Primero importamo las librerías del teclado matricial y TextLCD haciendo algunas modificaciones para un correcto funcionamiento.
 
 ### Creación del objeto lcd
 
@@ -20,9 +21,9 @@ TextLCD lcd(D2, D3, D4, D5, D6, D7, TextLCD::LCD16x2);
 5. D6:
 6. D7:
 
+### Método para mostrar interfaz de usuario
 
-1. Se importaron las librerías del teclado matricial y TextLCD.
-2. Se creó un método void para llamado `darMensaje()` donde mostramos un mensaje de bienvenida y la interfaz de nuestro proyecto.
+Se creó un método void para llamado `darMensaje()` donde mostramos un mensaje de bienvenida y la interfaz de nuestro proyecto.
 
 ```c++
    void darMensaje(){    

@@ -5,8 +5,8 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 ## Para mostrar mensajes en la pantalla LCD
 
-1. Se importaron las librerias del teclado matricial y TextLCD.
-2. Se creo un metodo void para mostrar los mensajes de bienvenidad y del como funciona el programa por hubo problemas el ponerlo directament en el main. El metodo se llama `darMensaje()` y es el siguiente:
+1. Se importaron las librerías del teclado matricial y TextLCD.
+2. Se creó un método void para llamado `darMensaje()` donde mostramos un mensaje de bienvenida y la interfaz de nuestro proyecto.
 
 ```c++
    void darMensaje(){    
@@ -26,7 +26,9 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 }
 ```
 
-Sabemos que `lcd.cls();` es para limpiar la pantalla LCD, `lcd.printf()` para mostrar un mensaje en la LCD y `wais_us()` para darle un tiempo de espera al mensaje 
+Usamos el método `printf()` de la librería TextLCD para mostrar un mensaje en la pantalla LCD
+Usamos el método `cls()` de la librería TextLCD para limpiar la pantalla LCD 
+Usamos el método `wati_us()` de la librería TextLCD para darle un tiempo de espera al siguiente mensaje
 
 
 ## Algunas funciones y declaraciones

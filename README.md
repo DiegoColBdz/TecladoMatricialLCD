@@ -1,6 +1,6 @@
 
 # Implementacion Parcial de Arquitectura de HardWare 
-Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
+Por Diego Collazos, José David Jayk Vanegas y Samuel Corrales
 
 
 ## Para mostrar mensajes en la pantalla LCD
@@ -23,7 +23,7 @@ TextLCD lcd(D2, D3, D4, D5, D6, D7, TextLCD::LCD16x2);
 
 ### Método para mostrar interfaz de usuario
 
-Se creó un método void para llamado `darMensaje()` donde mostramos un mensaje de bienvenida y la interfaz de nuestro proyecto.
+Se creó un método void llamado `darMensaje()` donde mostramos un mensaje de bienvenida y la interfaz de nuestro proyecto.
 
 ```c++
    void darMensaje(){    

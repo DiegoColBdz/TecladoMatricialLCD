@@ -51,7 +51,8 @@ Usamos el método `wati_us()` de la librería TextLCD para darle un tiempo de es
 
 ## Algunas fotos
 
-Benvenido profe Juan.jpg
+![Image text](Benvenido profe Juan.jpg)
+
 
 Elija una opción.jpg
 

@@ -27,7 +27,9 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 ```
 
 Usamos el método `printf()` de la librería TextLCD para mostrar un mensaje en la pantalla LCD
+
 Usamos el método `cls()` de la librería TextLCD para limpiar la pantalla LCD 
+
 Usamos el método `wati_us()` de la librería TextLCD para darle un tiempo de espera al siguiente mensaje
 
 

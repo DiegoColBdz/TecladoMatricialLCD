@@ -4,7 +4,7 @@ Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 
 ## Para mostrar mensajes en la pantalla LCD
-Primero importamo las librerías del teclado matricial y TextLCD haciendo algunas modificaciones para un correcto funcionamiento.
+Primero importamos las librerías del teclado matricial y TextLCD haciendo algunas modificaciones para un correcto funcionamiento.
 
 ### Creación del objeto lcd
 

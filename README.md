@@ -52,14 +52,9 @@ Usamos el método `wati_us()` de la librería TextLCD para darle un tiempo de es
 ## Algunas fotos
 
 ![Image text](https://github.com/DiegoColBdz/TecladoMatricialLCD/blob/master/Benvenido%20profe%20Juan.jpg)
-
-
-Elija una opción.jpg
-
-Coeficientes.jpg
-
-Raices.jpg
-
+![Image text](https://github.com/DiegoColBdz/TecladoMatricialLCD/blob/master/Elija%20una%20opci%C3%B3n.jpg)
+![Image text](https://github.com/DiegoColBdz/TecladoMatricialLCD/blob/master/Coeficientes.jpg)
+![Image text](https://github.com/DiegoColBdz/TecladoMatricialLCD/blob/master/Raices.jpg)
 
 ## Algunas funciones y declaraciones
 

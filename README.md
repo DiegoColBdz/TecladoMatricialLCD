@@ -14,12 +14,10 @@ Creamos un objeto lcd de tipo TextLCD donde indicamos cada uno de los puertos qu
 TextLCD lcd(D2, D3, D4, D5, D6, D7, TextLCD::LCD16x2);
 ```
 
-1. D2:
-2. D3:
-3. D4:
-4. D5:
-5. D6:
-6. D7:
+1. D2: [RS], este pin controla dónde dentro de la memoria de la pantalla se va a guardar toda la información que se le envie.
+2. D3: [E], este pin permite el flujo de información entre el microcontrolador y la pantalla.
+3. D4-D7: estos pines son los que se encargan de pasar información del computador a la pantalla LCD. 
+
 
 ### Método para mostrar interfaz de usuario
 

@@ -3,12 +3,12 @@
 Por Diego Collazos y José David Jayk Vanegas y Samuel Corrales
 
 
-## Lo nuevo 
+## Para mostrar mensajes en la pantalla LCD
 
 1. Se importaron las librerias del teclado matricial y TextLCD.
 2. Se creo un metodo void para mostrar los mensajes de bienvenidad y del como funciona el programa por hubo problemas el ponerlo directament en el main. El metodo se llama `darMensaje()` y es el siguiente:
 
-   ```c++
+```c++
    void darMensaje(){    
     lcd.printf("Bienvenido profe Juan, Arq Hard");
     wait_us(2000000);
